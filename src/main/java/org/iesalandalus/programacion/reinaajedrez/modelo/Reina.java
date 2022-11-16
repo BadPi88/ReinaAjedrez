@@ -3,61 +3,63 @@ package org.iesalandalus.programacion.reinaajedrez.modelo;
 import javax.naming.OperationNotSupportedException;
 
 public class Reina {
-	
-	 private Color color;
-	 private Posicion posicion;
-	 
+
+	private Color color;
+	private Posicion posicion;
+
+	public Reina() {
+		setColor(Color.BLANCO);
+		this.posicion = new Posicion(1, 'd');
+	}
+
+	public Reina(Color color) {
+		setColor(color);
+
+		switch (color) {
+		case BLANCO:
+			setPosicion(new Posicion(1, 'd'));
+			break;
+		case NEGRO:
+			setPosicion(new Posicion(8, 'd'));
+			break;
+		}
+	}
+
 	public Color getColor() {
 		return color;
 	}
-	
+
 	private void setColor(Color color) {
-		if(color != Color.BLANCO || color != Color.NEGRO) {
-			throw new NullPointerException("El color de la reina tiene que ser blanco o negro");
-		} else 
+		if (color == null) {
+			throw new NullPointerException("ERROR: El color no puede ser nulo.");
+		}
 		this.color = color;
 	}
-	
+
 	public Posicion getPosicion() {
 		return posicion;
 	}
-	
+
 	private void setPosicion(Posicion posicion) {
 		this.posicion = posicion;
 	}
-	
-	public Reina(){
-		setColor(Color.BLANCO);
-		this.posicion = new Posicion(1,'d');
-	}
-	public Reina(Color color){
-		setColor(color);
-		
-		switch (color){
-		case BLANCO:
-			  setPosicion(new Posicion(1,'d'));
-			break;
-		case NEGRO:
-			setPosicion(new Posicion(8,'d'));
-			break;
+
+	public void mover(Direccion direccion, int pasos) throws OperationNotSupportedException {
+
+
+		if (direccion == null) {
+			throw new NullPointerException("ERROR: La dirección no puede ser nula.");
 		}
-	}
-	public void Mover(Direccion direccion, int pasos) throws OperationNotSupportedException{
-		
-		if(pasos < 1 || pasos > 7 ){
-			throw new IllegalArgumentException("Movimiento no valido");
+		if (pasos < 1 || pasos > 7) {
+			throw new IllegalArgumentException("ERROR: El número de pasos debe estar comprendido entre 1 y 7.");
 		}
-		
-		if(direccion == null ){
-			throw new NullPointerException("Movimiento no valido");
-		}
-		
-		char nuevaColumna = getPosicion().getColumna() ;
+
+		char nuevaColumna = getPosicion().getColumna();
 		int nuevaFila = getPosicion().getFila();
-		
-		switch(direccion){
+
+		switch (direccion) {
 		case ESTE:
-			nuevaColumna += pasos; 
+			nuevaColumna += pasos;
 			break;
 		case NORESTE:
 			nuevaColumna += pasos;
@@ -86,13 +88,17 @@ public class Reina {
 			break;
 		}
 		try {
-			setPosicion(new Posicion(nuevaFila,nuevaColumna));
-			
-		}catch(IllegalArgumentException e){
-			throw new OperationNotSupportedException("movimientoNoValido");
-		}
-			
-		}
-		
-	}
+			setPosicion(new Posicion(nuevaFila, nuevaColumna));
 
+		} catch (IllegalArgumentException e) {
+			throw new OperationNotSupportedException("ERROR: Movimiento no válido (se sale del tablero).");
+		}
+
+	}
+	@Override
+	public String toString() {
+		return "color=" + color + ", posicion=(" + getPosicion().toString() + ")";
+	}
+	
+
+}
