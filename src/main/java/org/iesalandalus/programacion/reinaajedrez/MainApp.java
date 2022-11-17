@@ -8,6 +8,32 @@ import org.iesalandalus.programacion.reinaajedrez.modelo.Reina;
 public class MainApp {
 	
 	static Reina reina;
+	
+	private static void ejecutarOpcion(int opcion){
+		
+		switch(opcion) {
+		case 1:
+			crearReinaPorDefecto();
+			mostrarReina();
+			break;
+		case 2:
+			crearReinaColor();
+			mostrarReina();
+			break;
+		case 3: 
+			try {
+				mover();
+			} catch (NullPointerException e) {
+				System.out.println("ERROR: La reina es nula");
+			}
+			mostrarReina();
+			break;
+		case 4:
+			Consola.despedirse();
+			break;
+		}
+	}
+	
 	private static void crearReinaPorDefecto() {
 	 	reina = new Reina();
 	}
@@ -15,19 +41,32 @@ public class MainApp {
 		reina = new Reina(Consola.elegirColor());
 	}
 	private static void mover(){
-		Consola.mostrarMenu();
+		Consola.mostrarMenuDirecciones();
 		try {
 			reina.mover(Consola.elegirDireccion(), Consola.elegirPasos());
 		} catch (OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
+		}	
+	}
+	private static void mostrarReina() {
+		if(reina == null ) {
+			throw new NullPointerException("Reina no extiste");
+		} else {
+		System.out.println(reina.toString());
+			
 		}
-		
-		
+			
 	}
 	
 	public static void main(String[] args){
+		int opcion;
+		do { 
+			Consola.mostrarMenu();
+			opcion = Consola.elegirOpcionMenu();
+			ejecutarOpcion(opcion);
 		
+		}while(opcion != 4);
 			
-		}
+	}
 	
 }
