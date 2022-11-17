@@ -6,7 +6,6 @@ import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
 	private Consola() {
-		
 	}
 	public static void mostrarMenu(){
 		System.out.println("Menu: ");
@@ -31,6 +30,7 @@ public class Consola {
 			System.out.println("2.Reina de colo Blanco");
 			opcionColor = Entrada.entero();
 		} while (opcionColor <1 || opcionColor > 2);
+		
 		if(opcionColor == 1){
 		return Color.NEGRO;
 		}else {
@@ -51,11 +51,11 @@ public class Consola {
 	public static Direccion elegirDireccion(){
 		int opcionDireccion;
 		Direccion direccion = Direccion.NOROESTE;
+		
 		do {
 			System.out.println("Elige una opcion.");
 			opcionDireccion = Entrada.entero();
-			
-			//! hacer lo contrario
+
 		} while (opcionDireccion < 1 || opcionDireccion > 8);
 		switch (opcionDireccion) {
 		case 1:
