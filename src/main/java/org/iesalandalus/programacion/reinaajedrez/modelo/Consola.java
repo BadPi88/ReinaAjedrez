@@ -1,7 +1,5 @@
 package org.iesalandalus.programacion.reinaajedrez.modelo;
 
-import java.nio.file.spi.FileSystemProvider;
-
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
@@ -38,6 +36,7 @@ public class Consola {
 		}
 		
 	}
+	
 	public static void mostrarMenuDirecciones() {
 		System.out.println("1.Norte");
 		System.out.println("2.Noreste");
@@ -57,6 +56,8 @@ public class Consola {
 			opcionDireccion = Entrada.entero();
 
 		} while (opcionDireccion < 1 || opcionDireccion > 8);
+		
+		//respetar orden de orientaciones de mostrarMenuDirecciones.
 		switch (opcionDireccion) {
 		case 1:
 			direccion = Direccion.NORTE;

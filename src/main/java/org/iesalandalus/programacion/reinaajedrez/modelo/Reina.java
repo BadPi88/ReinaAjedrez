@@ -29,6 +29,7 @@ public class Reina {
 		return color;
 	}
 
+	// Color no puede ser nulo hacer condicion.
 	private void setColor(Color color) {
 		if (color == null) {
 			throw new NullPointerException("ERROR: El color no puede ser nulo.");
@@ -43,9 +44,10 @@ public class Reina {
 	private void setPosicion(Posicion posicion) {
 		this.posicion = posicion;
 	}
+	
+	//Excepciones y posibles movimientos
 
 	public void mover(Direccion direccion, int pasos) throws OperationNotSupportedException {
-
 
 		if (direccion == null) {
 			throw new NullPointerException("ERROR: La dirección no puede ser nula.");
@@ -56,7 +58,7 @@ public class Reina {
 
 		char nuevaColumna = getPosicion().getColumna();
 		int nuevaFila = getPosicion().getFila();
-
+		// Incluir todas las posibles direcciones
 		switch (direccion) {
 		case ESTE:
 			nuevaColumna += pasos;
@@ -93,12 +95,10 @@ public class Reina {
 		} catch (IllegalArgumentException e) {
 			throw new OperationNotSupportedException("ERROR: Movimiento no válido (se sale del tablero).");
 		}
-
 	}
-	@Override
+
 	public String toString() {
 		return "color=" + color + ", posicion=(" + getPosicion().toString() + ")";
 	}
-	
 
 }

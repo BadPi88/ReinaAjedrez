@@ -6,12 +6,12 @@ import org.iesalandalus.programacion.reinaajedrez.modelo.Consola;
 import org.iesalandalus.programacion.reinaajedrez.modelo.Reina;
 
 public class MainApp {
-	
+
 	static Reina reina;
-	
-	private static void ejecutarOpcion(int opcion){
-		
-		switch(opcion) {
+
+	private static void ejecutarOpcion(int opcion) {
+
+		switch (opcion) {
 		case 1:
 			crearReinaPorDefecto();
 			mostrarReina();
@@ -20,53 +20,54 @@ public class MainApp {
 			crearReinaColor();
 			mostrarReina();
 			break;
-		case 3: 
-			try {
+		case 3:
+
+			// Incluimos if para evitar error de reina nula
+			if (reina == null) {
+				System.out.println("No es posible mover una reina que no existe.");
+			} else {
 				mover();
-			} catch (NullPointerException e) {
-				System.out.println("ERROR: La reina es nula");
+				mostrarReina();
 			}
-			mostrarReina();
 			break;
 		case 4:
 			Consola.despedirse();
 			break;
 		}
 	}
-	
+
 	private static void crearReinaPorDefecto() {
-	 	reina = new Reina();
+		reina = new Reina();
 	}
+
 	private static void crearReinaColor() {
 		reina = new Reina(Consola.elegirColor());
 	}
-	private static void mover(){
+
+	private static void mover() {
 		Consola.mostrarMenuDirecciones();
 		try {
 			reina.mover(Consola.elegirDireccion(), Consola.elegirPasos());
 		} catch (OperationNotSupportedException e) {
 			System.out.println(e.getMessage());
-		}	
+		}
 	}
+
 	private static void mostrarReina() {
-		if(reina == null ) {
+		if (reina == null) {
 			throw new NullPointerException("Reina no extiste");
 		} else {
-		System.out.println(reina.toString());
-			
+			System.out.println(reina.toString());
 		}
-			
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		int opcion;
-		do { 
+		do {
 			Consola.mostrarMenu();
 			opcion = Consola.elegirOpcionMenu();
 			ejecutarOpcion(opcion);
-		
-		}while(opcion != 4);
-			
+
+		} while (opcion != 4);
 	}
-	
 }
